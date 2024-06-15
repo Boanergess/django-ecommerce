@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Hola {{ user.first_name }},
+
+Puedes activar tu cuenta dando click al siguiente link:
+
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+Saludos, Novaópticas!
+
+{% endautoescape %} 
