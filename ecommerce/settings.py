@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kkk!q5goz5iz_w5rulv3ufjwqwqzic=8hdn86s8#)o*aba-t28'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool, default=True)
 
 ALLOWED_HOSTS = []
 
@@ -90,12 +91,12 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'novaopticas',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': '127.0.0.1',
-        'PORT': '5433',
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
@@ -148,18 +149,18 @@ MESSAGE_TAGS = {
     messages.ERROR : 'danger',
 }
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' 
-EMAIL_HOST_PASSWORD = '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'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'samueliseo99@gmail.com'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
-TRANSBANK_API_URL = 'https://webpay3gint.transbank.cl'
-TRANSBANK_API_KEY_ID = '597055555532'
-TRANSBANK_API_KEY_SECRET = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
-TRANSBANK_RETURN_URL = 'http://127.0.0.1:8000/orders/webpay/retorno'
+TRANSBANK_API_URL = config('TRANSBANK_API_URL')
+TRANSBANK_API_KEY_ID = config('TRANSBANK_API_KEY_ID')
+TRANSBANK_API_KEY_SECRET = config('TRANSBANK_API_KEY_SECRET')
+TRANSBANK_RETURN_URL = config('TRANSBANK_RETURN_URL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
